@@ -44,7 +44,7 @@ addLayer("s", {
             description() {
                 return `Rizz boosts point gain.`
             },
-            cost: new Decimal(100),
+            cost: new Decimal(25),
             currencyDisplayName:"rizz",
             currencyInternalName:"rizz",
             currencyLayer:"s",
@@ -56,10 +56,12 @@ addLayer("s", {
                 return `${format(upgradeEffect(this.layer,this.id))}x`
             }            
         },
-        12: {title: "weather",description(){return``}}
+        12: {title: "weather",description(){return`Unlock sigma.`}}
     },
     decay() {
         let x = player.points.add(1).mul(4).root(2.5)
-        return x
+        let y = Decimal.pow((player.s.resetTime/100)+1, 2.5)
+        let z = player.s.points.add(1).mul(2).root(2)
+        return {x:x,y:y,z:z}
     }
 })

@@ -1,12 +1,12 @@
 let modInfo = {
-	name: "The ??? Tree",
+	name: "The Skibidi Tree",
 	author: "nobody",
 	pointsName: "points",
 	modFiles: ["layers.js", "tree.js"],
 
 	discordName: "",
 	discordLink: "",
-	initialStartPoints: new Decimal (10), // Used for hard resets and new players
+	initialStartPoints: new Decimal (0), // Used for hard resets and new players
 	offlineLimit: 1,  // In hours
 }
 
@@ -42,21 +42,32 @@ function getPointGen() {
 		return new Decimal(0)
 
 	let gain = new Decimal(1)
-  if (player.points.gte(player.cap)) gain=gain.div(tmp.s.decay)
+  if (player.points.gte(player.cap)) gain=gain.div(tmp.s.decay.x)
+  gain=gain.div(tmp.s.decay.y)
+  gain=gain.div(tmp.s.decay.z)
   if (hasUpgrade('s',11)) gain=gain.mul(upgradeEffect('s',11))
 	return gain
 }
 
 // You can add non-layer related variables that should to into "player" and be saved here, along with default values
 function addedPlayerData() { return {
-    cap: new Decimal(0)
+    cap: new Decimal(0),
+    limit: new Decimal(5)
 }}
 
 // Display extra things at the top of the page
 var displayThings = [
     function() {
-      let text = `Points above ${formatWhole(player.cap)} divide point generation. Currently: ${format(tmp.s.decay)}x`
-      if (player.points.gte(player.cap)) return text
+      let txt = ``
+      let text = `Points above ${formatWhole(player.cap)} divide point generation. Currently: ${format(tmp.s.decay.x)}x`
+      let text2 = `<br>Time spent on this skibidi (${formatTime(player.s.resetTime)}) divides point generation. Currently: ${format(tmp.s.decay.y)}x`
+      let text3 = `<br>Skibidi toilets also divide point generation. Currently: ${format(tmp.s.decay.z)}x`
+      let text4 = `<br>Points are hardcapped at ${formatWhole(player.limit)}`
+      if (player.points.gte(player.cap)) txt = txt + text
+      txt = txt + text2
+      txt = txt + text3
+      if (player.points.gte(player.limit)) txt = txt + text4
+      return txt
     }
 ]
 
