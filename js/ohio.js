@@ -11,7 +11,7 @@ addLayer("o", {
     }},
     color: "#4BDC13",
     requires: new Decimal(5), // Can be a function that takes requirement increases into account
-    resource: "ohio points", // Name of prestige currency
+    resource: "ohio point(s)", // Name of prestige currency
     baseResource: "points", // Name of resource prestige is based on
     baseAmount() {return player.points}, // Get the current amount of baseResource
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
@@ -21,7 +21,8 @@ addLayer("o", {
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
-        return new Decimal(1)
+        exp = new Decimal(Decimal.div(1, "1e100"))
+        return exp
     },
     row: 1, // Row the layer is in on the tree (0 is the first row)
     hotkeys: [
@@ -67,9 +68,8 @@ addLayer("o", {
             buy() {                
                 player.o.points = player.o.points.sub(tmp[this.layer].buyables[this.id].cost)
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
-                player.cap = player.cap.add(1)
             },
-            purchaseLimit: new Decimal(1),
+            // purchaseLimit: new Decimal(1),
             effect() {
                 let x = Decimal.pow(1.1, getBuyableAmount(this.layer,this.id))
                 return {
@@ -77,11 +77,25 @@ addLayer("o", {
                     y:x.mul(1.1),
                 }
             },
+        },
+        13: {
+            display() { return `Keep Rizz Upgrade 12 "weather".
+            Cost: ${format(tmp[this.layer].buyables[this.id].cost)} ohio points.` },
+            cost: new Decimal(10),
+            canAfford() { return player.o.points.gte(tmp[this.layer].buyables[this.id].cost) },
+            buy() {                
+                player.o.points = player.o.points.sub(tmp[this.layer].buyables[this.id].cost)
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+                player.cap = player.cap.add(1)
+            },
+            purchaseLimit: new Decimal(1),
         },      
     },
     prestigeButtonText() {
-        let txt = `Reset for <b>+${formatWhole(getResetGain('o'))} ohio points.`
-        let txt2 = ``
+        let txt = `Reset for <b>+${formatWhole(getResetGain('o'))}</b> ohio point(s).`
+        let txt2 = `<br><br>Next at ta txeN`
+        txt = txt + txt2
+        return txt
     },
     tabFormat: {
         "Upgrades": {

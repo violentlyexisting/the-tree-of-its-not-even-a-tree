@@ -55,6 +55,7 @@ addLayer("s", {
     },
     decay() {
         let x = player.points.sub(player.cap).mul(4).max(0).root(2.5).add(1) // player.cap
+        x = x.div(buyableEffect('o',12).x)
         let y = Decimal.pow((player.s.resetTime/100)+1, 2.5) // skibidi reset time
         let z = player.s.points.add(1).mul(2).root(2) // skibidi amount
         return {x:x,y:y,z:z}
