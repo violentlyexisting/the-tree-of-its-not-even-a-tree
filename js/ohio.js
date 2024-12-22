@@ -4,7 +4,7 @@ addLayer("o", {
     position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
     startData() { return {
         unlocked: false,
-		points: decimalZero,
+		    points: decimalZero,
         best: decimalZero,
         total: decimalZero,
         resetTime: 0,
@@ -27,7 +27,7 @@ addLayer("o", {
     hotkeys: [
         {key: "p", description: "P: Reset for prestige points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown(){return hasUpgrade('s',13)||player.o.unlocked},
+    layerShown(){return hasUpgrade('s',23)||player.o.unlocked},
     branches:['s'],
     componentStyles: {
         "buyable"() {
@@ -44,7 +44,7 @@ addLayer("o", {
     buyables: { // display, cost, canAfford, buy and optionally purchaseLimit
         11: { // buyableEffect, and getBuyableAmount
             display() { return `Point nerf based on itself starts 1 point later.
-            Cost: ${tmp[this.layer].buyables[this.id].cost} ohio point.` },
+            Cost: ${format(tmp[this.layer].buyables[this.id].cost)} ohio point.` },
             cost: new Decimal(1),
             canAfford() { return player.o.points.gte(tmp[this.layer].buyables[this.id].cost) },
             buy() {                
@@ -56,11 +56,12 @@ addLayer("o", {
         },
         12: {
             display() { return `Reduce the point nerf based on itself.
-            Cost: ${tmp[this.layer].buyables[this.id].cost} ohio points.
-            Currently: ${format(buyableEffect(this.layer,this.id).x)}
-            Next: ${format(buyableEffect(this.layer,this.id).y)}` },
+            Cost: ${format(tmp[this.layer].buyables[this.id].cost)} ohio points.
+            Currently: ${format(buyableEffect(this.layer,this.id).x)}x
+            Next: ${format(buyableEffect(this.layer,this.id).y)}x` },
             cost() {
                 let x = Decimal.pow(2, getBuyableAmount(this.layer,this.id).add(1).pow(1.2))
+                return x
             },
             canAfford() { return player.o.points.gte(tmp[this.layer].buyables[this.id].cost) },
             buy() {                
@@ -72,10 +73,25 @@ addLayer("o", {
             effect() {
                 let x = Decimal.pow(1.1, getBuyableAmount(this.layer,this.id))
                 return {
-                    x:x
+                    x:x,
+                    y:x.mul(1.1),
                 }
-            }
-        },
-      
+            },
+        },      
+    },
+    prestigeButtonText() {
+        let txt = `Reset for <b>+${formatWhole(getResetGain('o'))} ohio points.`
+        let txt2 = ``
+    },
+    tabFormat: {
+        "Upgrades": {
+            content:[
+                "main-display",
+                "blank",
+                "prestige-button",
+                "blank",              
+                ["row", [["buyable",11], ["buyable",12]]],
+            ]
+        }
     }
 })
