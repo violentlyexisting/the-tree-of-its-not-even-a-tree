@@ -10,8 +10,8 @@ addLayer("o", {
         resetTime: 0,
     }},
     color: "#4BDC13",
-    requires: new Decimal(6), // Can be a function that takes requirement increases into account
-    resource: "prestige points", // Name of prestige currency
+    requires: new Decimal(5), // Can be a function that takes requirement increases into account
+    resource: "ohio points", // Name of prestige currency
     baseResource: "points", // Name of resource prestige is based on
     baseAmount() {return player.points}, // Get the current amount of baseResource
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
@@ -41,7 +41,41 @@ addLayer("o", {
             }
         }
     },
-    buyables: { // display, canAfford, 
+    buyables: { // display, cost, canAfford, buy and optionally purchaseLimit
+        11: { // buyableEffect, and getBuyableAmount
+            display() { return `Point nerf based on itself starts 1 point later.
+            Cost: ${tmp[this.layer].buyables[this.id].cost} ohio point.` },
+            cost: new Decimal(1),
+            canAfford() { return player.o.points.gte(tmp[this.layer].buyables[this.id].cost) },
+            buy() {                
+                player.o.points = player.o.points.sub(tmp[this.layer].buyables[this.id].cost)
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+                player.cap = player.cap.add(1)
+            },
+            purchaseLimit: new Decimal(1),
+        },
+        12: {
+            display() { return `Reduce the point nerf based on itself.
+            Cost: ${tmp[this.layer].buyables[this.id].cost} ohio points.
+            Currently: ${format(buyableEffect(this.layer,this.id).x)}
+            Next: ${format(buyableEffect(this.layer,this.id).y)}` },
+            cost() {
+                let x = Decimal.pow(2, getBuyableAmount(this.layer,this.id).add(1).pow(1.2))
+            },
+            canAfford() { return player.o.points.gte(tmp[this.layer].buyables[this.id].cost) },
+            buy() {                
+                player.o.points = player.o.points.sub(tmp[this.layer].buyables[this.id].cost)
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+                player.cap = player.cap.add(1)
+            },
+            purchaseLimit: new Decimal(1),
+            effect() {
+                let x = Decimal.pow(1.1, getBuyableAmount(this.layer,this.id))
+                return {
+                    x:x
+                }
+            }
+        },
       
     }
 })
