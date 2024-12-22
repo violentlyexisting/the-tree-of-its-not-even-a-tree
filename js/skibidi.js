@@ -21,6 +21,7 @@ addLayer("s", {
         req = new Decimal(1)
         if (hasUpgrade('s',15)) req=req.div(upgradeEffect('s',15))
         if (hasUpgrade('s',21)) req=req.div(2)
+        if (hasUpgrade('s',22)) req=req.div(upgradeEffect('s',22))
         if (player.s.points.gte(10)) req=req.mul(player.s.points.div(10))
         return req
     },
@@ -48,8 +49,9 @@ addLayer("s", {
         13: {title: "outside",description(){return`Points boost themselves`},cost:new Decimal(144),currencyDisplayName:"rizz",currencyInternalName:"rizz",currencyLayer:"s",effect(){let x = player.points.add(1).root(2);return x},effectDisplay() {return `${format(upgradeEffect('s',13))}x`}},
         14: {title: "is",description(){return`Multiplier to points that decreases with time in this skibidi.`},cost:new Decimal(15**2),currencyDisplayName:"rizz",currencyInternalName:"rizz",currencyLayer:"s",effect(){let x = new Decimal(10).sub(Decimal.pow(player.s.resetTime, 0.9)).max(1);return x},effectDisplay() {return `${format(upgradeEffect('s',14))}x`}},
         15: {title: "rizzy",description(){return`Multiplier to skibidi toilets based on points.`},cost:new Decimal(20**2),currencyDisplayName:"rizz",currencyInternalName:"rizz",currencyLayer:"s",effect(){let x = player.points.add(1).root(2.3);return x},effectDisplay() {return `${format(upgradeEffect('s',15))}x`}},
-        21: {title: "But the",description(){return`Skibidi toilet requirement is divided by 2.`},cost:new Decimal(10),currencyDisplayName:"sigma",currencyInternalName:"sigma",currencyLayer:"s",},
-        22: {title: "fire",description(){return`Multiplier to skibidi toilets that decreases with time in this skibidi.`},cost:new Decimal(10),currencyDisplayName:"sigma",currencyInternalName:"sigma",currencyLayer:"s",,effect(){let x = new Decimal(2).sub(Decimal.pow(player.s.resetTime, 0.4)).max(1);return x},effectDisplay() {return `${format(upgradeEffect('s',22))}x`}}
+        21: {title: "But the",description(){return`Skibidi toilet requirement is divided by 2.`},cost:new Decimal(4),currencyDisplayName:"sigma",currencyInternalName:"sigma",currencyLayer:"s",},
+        22: {title: "fire",description(){return`Sigma costs decrease with more skibidi toilets.`},cost:new Decimal(5),currencyDisplayName:"sigma",currencyInternalName:"sigma",currencyLayer:"s",effect(){let x = player.s.points.pow(1.2).add(1);return x},effectDisplay() {return `${format(upgradeEffect('s',22))}x`}},
+        23: {title: "is",description(){return`Unlock Ohio.`},cost}
     },
     decay() {
         let x = player.points.add(1).mul(4).root(2.5)
@@ -83,6 +85,6 @@ addLayer("s", {
       }
     },
     update(diff) {
-        if (hasUpgrade('s',12)) player.s.sigma = player.s.sigma.add(tmp.s.sigmaduction.mul(diff))
+        if (hasUpgrade('s',12)) player.s.sigma = player.s.sigma.add(tmp.s.sigmaduction.mul(diff)).min(player.limit)
     }
 })

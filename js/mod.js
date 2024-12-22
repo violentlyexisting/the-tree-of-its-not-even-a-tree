@@ -64,11 +64,13 @@ var displayThings = [
       let text = `Points above ${formatWhole(player.cap)} divide point generation. Currently: ${format(tmp.s.decay.x)}x`
       let text2 = `<br>Time spent on this skibidi (${formatTime(player.s.resetTime)}) divides point generation. Currently: ${format(tmp.s.decay.y)}x`
       let text3 = `<br>Skibidi toilets also divide point generation. Currently: ${format(tmp.s.decay.z)}x`
-      let text4 = `<br>Points are hardcapped at ${formatWhole(player.limit)}`
+      let text4 = `<br>Points are hardcapped at ${formatWhole(player.limit)}.`
+      let text5 = `<br>Most passive generations are also hardcapped at ${formatWhole(player.limit)} of said resource.`
       if (player.points.gte(player.cap)) txt = txt + text
       txt = txt + text2
       txt = txt + text3
       if (player.points.gte(player.limit)) txt = txt + text4
+      if (player.s.sigma.gte(player.limit)) txt = txt + text5
       return txt
     }
 ]
