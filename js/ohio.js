@@ -29,4 +29,16 @@ addLayer("o", {
     ],
     layerShown(){return hasUpgrade('s',13)||player.o.unlocked},
     branches:['s'],
+    componentStyles: {
+        "buyable"() {
+            return {                
+                "width": "200px",
+                "height": "150px",
+                "border-radius": "10%",
+                "border": "5px solid",
+	              "border-color": "rgba(0, 0, 0, 0.1)",
+                "font-size": "13px",
+            }
+        }
+    }
 })
