@@ -21,7 +21,7 @@ addLayer("s", {
         req = new Decimal(1)
         if (hasUpgrade('s',15)) req=req.div(upgradeEffect('s',15))
         if (hasUpgrade('s',21)) req=req.div(2)
-        if (hasUpgrade('s',22)) req=req.div(upgradeEffect('s',22))
+        //if (hasUpgrade('s',22)) req=req.div(upgradeEffect('s',22))
         if (player.s.points.gte(10)) req=req.mul(player.s.points.div(10))
         return req
     },
@@ -50,13 +50,13 @@ addLayer("s", {
         14: {title: "is",description(){return`Multiplier to points that decreases with time in this skibidi.`},cost:new Decimal(15**2),currencyDisplayName:"rizz",currencyInternalName:"rizz",currencyLayer:"s",effect(){let x = new Decimal(10).sub(Decimal.pow(player.s.resetTime, 0.9)).max(1);return x},effectDisplay() {return `${format(upgradeEffect('s',14))}x`}},
         15: {title: "rizzy",description(){return`Multiplier to skibidi toilets based on points.`},cost:new Decimal(20**2),currencyDisplayName:"rizz",currencyInternalName:"rizz",currencyLayer:"s",effect(){let x = player.points.add(1).root(2.3);return x},effectDisplay() {return `${format(upgradeEffect('s',15))}x`}},
         21: {title: "But the",description(){return`Skibidi toilet requirement is divided by 2.`},cost:new Decimal(4),currencyDisplayName:"sigma",currencyInternalName:"sigma",currencyLayer:"s",},
-        22: {title: "fire",description(){return`Sigma costs decrease with more skibidi toilets.`},cost:new Decimal(5),currencyDisplayName:"sigma",currencyInternalName:"sigma",currencyLayer:"s",effect(){let x = player.s.points.pow(1.2).add(1);return x},effectDisplay() {return `${format(upgradeEffect('s',22))}x`}},
-        23: {title: "is",description(){return`Unlock Ohio.`},cost}
+        22: {title: "fire",description(){return`Sigma costs decrease with more skibidi toilets.`},cost:new Decimal(5),currencyDisplayName:"sigma",currencyInternalName:"sigma",currencyLayer:"s",effect(){let x = player.s.points.pow(1.5).add(1);return x},effectDisplay() {return `${format(upgradeEffect('s',22))}x`}},
+        23: {title: "is",description(){return`Unlock Ohio.`},cost(){let x = new Decimal(1000);if(hasUpgrade('s',22))x=x.div(upgradeEffect('s',22));return x},currencyDisplayName:"sigma",currencyInternalName:"sigma",currencyLayer:"s",}
     },
     decay() {
-        let x = player.points.add(1).mul(4).root(2.5)
-        let y = Decimal.pow((player.s.resetTime/100)+1, 2.5)
-        let z = player.s.points.add(1).mul(2).root(2)
+        let x = player.points.sub(player.cap).mul(4).max(0).root(2.5).add(1) // player.cap
+        let y = Decimal.pow((player.s.resetTime/100)+1, 2.5) // skibidi reset time
+        let z = player.s.points.add(1).mul(2).root(2) // skibidi amount
         return {x:x,y:y,z:z}
     },
     sigmaduction() {
@@ -80,7 +80,7 @@ addLayer("s", {
           function(){if (hasUpgrade('s',12)) return "blank"},
           ["display-text", function() {let text = `<span style="text-shadow:0 0 10px">Sigma Upgrades</span>`; if(hasUpgrade('s',12)) return text}],
           function(){if (hasUpgrade('s',12)) return "blank"},
-          function(){if (hasUpgrade('s',12)) return ["row", [ ["upgrade",21], ["upgrade",22],] ]}
+          function(){if (hasUpgrade('s',12)) return ["row", [ ["upgrade",21], ["upgrade",22], ["upgrade",23], ] ]}
         ]
       }
     },
