@@ -40,5 +40,8 @@ addLayer("o", {
                 "font-size": "13px",
             }
         }
+    },
+    buyables: { //
+      
     }
 })
