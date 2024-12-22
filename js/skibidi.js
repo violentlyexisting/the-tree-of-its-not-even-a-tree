@@ -48,7 +48,8 @@ addLayer("s", {
         13: {title: "outside",description(){return`Points boost themselves`},cost:new Decimal(144),currencyDisplayName:"rizz",currencyInternalName:"rizz",currencyLayer:"s",effect(){let x = player.points.add(1).root(2);return x},effectDisplay() {return `${format(upgradeEffect('s',13))}x`}},
         14: {title: "is",description(){return`Multiplier to points that decreases with time in this skibidi.`},cost:new Decimal(15**2),currencyDisplayName:"rizz",currencyInternalName:"rizz",currencyLayer:"s",effect(){let x = new Decimal(10).sub(Decimal.pow(player.s.resetTime, 0.9)).max(1);return x},effectDisplay() {return `${format(upgradeEffect('s',14))}x`}},
         15: {title: "rizzy",description(){return`Multiplier to skibidi toilets based on points.`},cost:new Decimal(20**2),currencyDisplayName:"rizz",currencyInternalName:"rizz",currencyLayer:"s",effect(){let x = player.points.add(1).root(2.3);return x},effectDisplay() {return `${format(upgradeEffect('s',15))}x`}},
-        21: {title: "But the",description(){return `Skibidi toilet requirement is divided by 2.`},cost:new Decimal(10),currencyDisplayName:"sigma",currencyInternalName:"sigma",currencyLayer:"s",}
+        21: {title: "But the",description(){return`Skibidi toilet requirement is divided by 2.`},cost:new Decimal(10),currencyDisplayName:"sigma",currencyInternalName:"sigma",currencyLayer:"s",},
+        22: {title: "fire",description(){return`Multiplier to skibidi toilets that decreases with time in this skibidi.`},cost:new Decimal(10),currencyDisplayName:"sigma",currencyInternalName:"sigma",currencyLayer:"s",,effect(){let x = new Decimal(2).sub(Decimal.pow(player.s.resetTime, 0.4)).max(1);return x},effectDisplay() {return `${format(upgradeEffect('s',22))}x`}}
     },
     decay() {
         let x = player.points.add(1).mul(4).root(2.5)
@@ -77,7 +78,7 @@ addLayer("s", {
           function(){if (hasUpgrade('s',12)) return "blank"},
           ["display-text", function() {let text = `<span style="text-shadow:0 0 10px">Sigma Upgrades</span>`; if(hasUpgrade('s',12)) return text}],
           function(){if (hasUpgrade('s',12)) return "blank"},
-          function(){if (hasUpgrade('s',12)) return ["row", [ ["upgrade",21] ] ]}
+          function(){if (hasUpgrade('s',12)) return ["row", [ ["upgrade",21], ["upgrade",22],] ]}
         ]
       }
     },
