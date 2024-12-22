@@ -45,13 +45,18 @@ addLayer("s", {
         12: {title: "weather",description(){return`Unlock sigma.`},cost:new Decimal(36),currencyDisplayName:"rizz",currencyInternalName:"rizz",currencyLayer:"s"},
         13: {title: "outside",description(){return`Points boost themselves`},cost:new Decimal(144),currencyDisplayName:"rizz",currencyInternalName:"rizz",currencyLayer:"s",effect(){let x = player.points.add(1).root(2);return x},effectDisplay() {return `${format(upgradeEffect('s',13))}x`}},
         14: {title: "is",description(){return`Multiplier to points that decreases with time in this skibidi.`},cost:new Decimal(15**2),currencyDisplayName:"rizz",currencyInternalName:"rizz",currencyLayer:"s",effect(){let x = new Decimal(10).sub(Decimal.pow(player.s.resetTime, 0.9)).max(1);return x},effectDisplay() {return `${format(upgradeEffect('s',14))}x`}},
-        15: {title: "rizzy",description(){return`Multiplier to skibidi toilets based on points.`},cost:new Decimal(20**2),currencyDisplayName:"rizz",currencyInternalName:"rizz",currencyLayer:"s",effect(){let x = player.points.add(1).root(2.3);return x},effectDisplay() {return `${format(upgradeEffect('s',15))}x`}}
+        15: {title: "rizzy",description(){return`Multiplier to skibidi toilets based on points.`},cost:new Decimal(20**2),currencyDisplayName:"rizz",currencyInternalName:"rizz",currencyLayer:"s",effect(){let x = player.points.add(1).root(2.3);return x},effectDisplay() {return `${format(upgradeEffect('s',15))}x`}},
+        21: {title: "But the",description(){return `Skibidi toilet requirement is divided by 2.`},cost:new Decimal(10),currencyDisplayName:"sigma",currencyInternalName:"sigma",currencyLayer:"s",}
     },
     decay() {
         let x = player.points.add(1).mul(4).root(2.5)
         let y = Decimal.pow((player.s.resetTime/100)+1, 2.5)
         let z = player.s.points.add(1).mul(2).root(2)
         return {x:x,y:y,z:z}
+    },
+    sigmaduction() {
+       let x = decimalOne
+       return x
     },
     tabFormat: {
       "Main": {
@@ -66,8 +71,14 @@ addLayer("s", {
           "blank",
           ["row",[["upgrade",11], ["upgrade",12], ["upgrade",13], ["upgrade",14], ["upgrade",15]]],
           function(){if (hasUpgrade('s',12)) return "blank"},
-          ["display-text", function() {let text = `<span style="text-shadow:0 0 10px">Sigma Upgrades</span>`; if(hasUpgrade('s',12)) return text}]
+          ["display-text", function(){let text=`You have ${format(player.s.sigma)} sigma.<br>(${format(tmp.s.sigmaduction)}/s)`; if(hasUpgrade('s',12)) return text}],
+          function(){if (hasUpgrade('s',12)) return "blank"},
+          ["display-text", function() {let text = `<span style="text-shadow:0 0 10px">Sigma Upgrades</span>`; if(hasUpgrade('s',12)) return text}],
+          
         ]
       }
+    },
+    update(diff) {
+        if (hasUpgrade('s',12)) player.s.sigma = player.s.sigma.add(tmp.s.sigmaduction.mul(diff))
     }
 })
