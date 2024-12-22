@@ -41,7 +41,7 @@ addLayer("o", {
             }
         }
     },
-    buyables: { //
+    buyables: { // display, canAfford, 
       
     }
 })
