@@ -20,6 +20,8 @@ addLayer("s", {
     gainMult() { // Calculate the multiplier for main currency from bonuses
         req = new Decimal(1)
         if (hasUpgrade('s',15)) req=req.div(upgradeEffect('s',15))
+        if (hasUpgrade('s',21)) req=req.div(2)
+        if (player.s.points.gte(10)) req=req.mul(player.s.points.div(10))
         return req
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -32,9 +34,9 @@ addLayer("s", {
     layerShown(){return true},
     effect() {
         let x = player.s.points.pow(2)
-        let y = player.s.points.pow(0.8).div(1000)
-        x = x.min(1000)
-        if (x.gte(1000)) x = x.mul(y)
+        x = x.min(10000)
+        let y = player.s.points.pow(0.8)
+        if (x.gte(1000)) x = player.s.points.pow(2).min(1000).add(y)
         return x
     },
     effectDescription() {
@@ -74,7 +76,8 @@ addLayer("s", {
           ["display-text", function(){let text=`You have ${format(player.s.sigma)} sigma.<br>(${format(tmp.s.sigmaduction)}/s)`; if(hasUpgrade('s',12)) return text}],
           function(){if (hasUpgrade('s',12)) return "blank"},
           ["display-text", function() {let text = `<span style="text-shadow:0 0 10px">Sigma Upgrades</span>`; if(hasUpgrade('s',12)) return text}],
-          
+          function(){if (hasUpgrade('s',12)) return "blank"},
+          function(){if (hasUpgrade('s',12)) return ["row", [ ["upgrade",21] ] ]}
         ]
       }
     },
