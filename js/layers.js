@@ -8,6 +8,7 @@ addLayer("s", {
         best: new Decimal(0),
         total: new Decimal(0),
         rizz: new Decimal(0),
+        sigma: new Decimal(0),
     }},
     color: "rgb(255, 0, 0)",
     requires: new Decimal(2), // Can be a function that takes requirement increases into account
@@ -56,12 +57,30 @@ addLayer("s", {
                 return `${format(upgradeEffect(this.layer,this.id))}x`
             }            
         },
-        12: {title: "weather",description(){return`Unlock sigma.`}}
+        12: {title: "weather",description(){return`Unlock sigma.`},cost:new Decimal(36),currencyDisplayName:"rizz",currencyInternalName:"rizz",currencyLayer:"s"},
+        13: {title: "outside",description(){return`Points boost themselves`},cost:new Decimal(144),currencyDisplayName:"rizz",currencyInternalName:"rizz",currencyLayer:"s",effect(){let x = player.points.add(1).root(2);return x},effectDisplay() {return `${upgradeEffect('s',13)}x`}
     },
     decay() {
         let x = player.points.add(1).mul(4).root(2.5)
         let y = Decimal.pow((player.s.resetTime/100)+1, 2.5)
         let z = player.s.points.add(1).mul(2).root(2)
         return {x:x,y:y,z:z}
+    },
+    tabFormat: {
+      "Main": {
+        content:[
+          "main-display",
+          "blank",
+          "prestige-button",
+          "blank",
+          "resource-display",
+          "blank",
+          ["display-text", function() {return `<span style="text-shadow:0 0 10px">Rizz Upgrades</span>`}],
+          "blank",
+          ["row",[["upgrade",11], ["upgrade",12]]],
+          function(){if (hasUpgrade('s',12)) return "blank"},
+          ["display-text", function() {let text = `<span style="text-shadow:0 0 10px">Sigma Upgrades</span>`; if(hasUpgrade('s',12)) return text}]
+        ]
+      }
     }
 })
