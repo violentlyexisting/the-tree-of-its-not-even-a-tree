@@ -42,16 +42,22 @@ function getPointGen() {
 		return new Decimal(0)
 
 	let gain = new Decimal(1)
+  if (player.points.gte(player.cap)) gain=gain.div(tmp.s.decay)
   if (hasUpgrade('s',11)) gain=gain.mul(upgradeEffect('s',11))
 	return gain
 }
 
 // You can add non-layer related variables that should to into "player" and be saved here, along with default values
 function addedPlayerData() { return {
+    cap: new Decimal(0)
 }}
 
 // Display extra things at the top of the page
 var displayThings = [
+    function() {
+      let text = `Points above ${formatWhole(player.cap)} divide point generation. Currently: ${format(tmp.s.decay)}x`
+      if (player.points.gte(player.cap)) return text
+    }
 ]
 
 // Determines when the game "ends"

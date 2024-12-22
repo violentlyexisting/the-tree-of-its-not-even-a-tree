@@ -10,12 +10,12 @@ addLayer("s", {
         rizz: new Decimal(0),
     }},
     color: "rgb(255, 0, 0)",
-    requires: new Decimal(10), // Can be a function that takes requirement increases into account
+    requires: new Decimal(2), // Can be a function that takes requirement increases into account
     resource: "skibidi toilets", // Name of prestige currency
     baseResource: "points", // Name of resource prestige is based on
     baseAmount() {return player.points}, // Get the current amount of baseResource
-    type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
-    exponent: 0.5, // Prestige currency exponent
+    type: "static", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
+    exponent: 0.1, // Prestige currency base
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
         return mult
@@ -33,12 +33,10 @@ addLayer("s", {
         let y = player.s.points.pow(0.8).div(1000)
         x = x.min(1000)
         if (x.gte(1000)) x = x.mul(y)
+        return x
     },
     effectDescription() {
         return `granting ${format(tmp.s.effect)} rizz.`
-    },
-    onPrestige() {
-        player.s.rizz = tmp.s.effect
     },
     upgrades: {
         11: {
@@ -54,9 +52,14 @@ addLayer("s", {
                 let x = player.s.rizz.add(1).log10().add(1)
                 return x
             },
-            effectDescription() {
-                return `${upgradeEffect(this.layer,this.id)}x`
+            effectDisplay() {
+                return `${format(upgradeEffect(this.layer,this.id))}x`
             }            
         },
+        12: {title: "weather",description(){return``}}
+    },
+    decay() {
+        let x = player.points.add(1).mul(4).root(2.5)
+        return x
     }
 })
