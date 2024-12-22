@@ -40,25 +40,11 @@ addLayer("s", {
         return `granting ${format(tmp.s.effect)} rizz.`
     },
     upgrades: {
-        11: {
-            title: "The",
-            description() {
-                return `Rizz boosts point gain.`
-            },
-            cost: new Decimal(25),
-            currencyDisplayName:"rizz",
-            currencyInternalName:"rizz",
-            currencyLayer:"s",
-            effect() {
-                let x = player.s.rizz.add(1).log10().add(1)
-                return x
-            },
-            effectDisplay() {
-                return `${format(upgradeEffect(this.layer,this.id))}x`
-            }            
-        },
+        11: {title: "The",description(){return `Rizz boosts point gain.`},cost: new Decimal(25),currencyDisplayName:"rizz",currencyInternalName:"rizz",currencyLayer:"s",effect() {let x = player.s.rizz.add(1).log10().add(1);return x},effectDisplay() {return `${format(upgradeEffect(this.layer,this.id))}x`}},
         12: {title: "weather",description(){return`Unlock sigma.`},cost:new Decimal(36),currencyDisplayName:"rizz",currencyInternalName:"rizz",currencyLayer:"s"},
-        13: {title: "outside",description(){return`Points boost themselves`},cost:new Decimal(144),currencyDisplayName:"rizz",currencyInternalName:"rizz",currencyLayer:"s",effect(){let x = player.points.add(1).root(2);return x},effectDisplay() {return `${upgradeEffect('s',13)}x`}
+        13: {title: "outside",description(){return`Points boost themselves`},cost:new Decimal(144),currencyDisplayName:"rizz",currencyInternalName:"rizz",currencyLayer:"s",effect(){let x = player.points.add(1).root(2);return x},effectDisplay() {return `${format(upgradeEffect('s',13))}x`}},
+        14: {title: "is",description(){return`Multiplier to points that decreases with time in this skibidi.`},cost:new Decimal(15**2),currencyDisplayName:"rizz",currencyInternalName:"rizz",currencyLayer:"s",effect(){let x = new Decimal(10).sub(Decimal.pow(player.s.resetTime, 0.9)).max(1);return x},effectDisplay() {return `${format(upgradeEffect('s',14))}x`}},
+        15: {title: "rizzy",description(){return`Multiplier to skibidi toilets based on points.`},cost:new Decimal(20**2),currencyDisplayName:"rizz",currencyInternalName:"rizz",currencyLayer:"s",effect(){let x = player.points.add(1).root(2.3);return x},}
     },
     decay() {
         let x = player.points.add(1).mul(4).root(2.5)
@@ -77,7 +63,7 @@ addLayer("s", {
           "blank",
           ["display-text", function() {return `<span style="text-shadow:0 0 10px">Rizz Upgrades</span>`}],
           "blank",
-          ["row",[["upgrade",11], ["upgrade",12]]],
+          ["row",[["upgrade",11], ["upgrade",12], ["upgrade",13], ["upgrade",14]]],
           function(){if (hasUpgrade('s',12)) return "blank"},
           ["display-text", function() {let text = `<span style="text-shadow:0 0 10px">Sigma Upgrades</span>`; if(hasUpgrade('s',12)) return text}]
         ]

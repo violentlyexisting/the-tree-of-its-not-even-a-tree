@@ -47,6 +47,7 @@ function getPointGen() {
   gain=gain.div(tmp.s.decay.z)
   if (hasUpgrade('s',11)) gain=gain.mul(upgradeEffect('s',11))
   if (hasUpgrade('s',13)) gain=gain.mul(upgradeEffect('s',13))
+  if (hasUpgrade('s',14)) gain=gain.mul(upgradeEffect('s',14))
 	return gain
 }
 
