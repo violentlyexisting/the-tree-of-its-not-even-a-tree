@@ -87,5 +87,14 @@ addLayer("s", {
     },
     update(diff) {
         if (hasUpgrade('s',12)) player.s.sigma = player.s.sigma.add(tmp.s.sigmaduction.mul(diff)).min(player.limit)
+    },
+    doReset(resettingLayer) {
+        let keep = [];
+        let kept = [12];
+        if (layers[resettingLayer].row > this.row) { 
+            // Reset the layer while keeping specified fields
+            layerDataReset(this.layer, keep);
+        };
+        if (getBuyableAmount('o',13).gte(1)) player.s.upgrades = player.s.upgrades.push(kept);
     }
 })

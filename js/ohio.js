@@ -66,7 +66,7 @@ addLayer("o", {
             },
             canAfford() { return player.o.points.gte(tmp[this.layer].buyables[this.id].cost) },
             buy() {                
-                player.o.points = player.o.points.sub(tmp[this.layer].buyables[this.id].cost)
+                player.o.points = Decimal.floor(player.o.points.sub(tmp[this.layer].buyables[this.id].cost))
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             // purchaseLimit: new Decimal(1),
@@ -104,7 +104,7 @@ addLayer("o", {
                 "blank",
                 "prestige-button",
                 "blank",              
-                ["row", [["buyable",11], ["buyable",12]]],
+                ["row", [["buyable",11], ["buyable",12], ["buyable",13], ]],
             ]
         }
     }

@@ -1,6 +1,6 @@
 let modInfo = {
 	name: "The Skibidi Tree",
-	author: "nobody",
+	author: "violet",
 	pointsName: "points",
 	modFiles: ["skibidi.js","ohio.js","tree.js"],
 
@@ -13,13 +13,12 @@ let modInfo = {
 // Set your version in num and name
 let VERSION = {
 	num: "0.0",
-	name: "Literally nothing",
+	name: "The Beginning",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
 	<h3>v0.0</h3><br>
-		- Added things.<br>
-		- Added stuff.`
+		- Added Skibidi and Ohio layers.<br>`
 
 let winText = `Congratulations! You have reached the end and beaten this game, but for now...`
 
