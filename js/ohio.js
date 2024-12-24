@@ -9,7 +9,7 @@ addLayer("o", {
         total: decimalZero,
         resetTime: 0,
     }},
-    color: "#4BDC13",
+    color: "rgb(255, 0, 0)",
     requires: new Decimal(5), // Can be a function that takes requirement increases into account
     resource: "ohio point(s)", // Name of prestige currency
     baseResource: "points", // Name of resource prestige is based on
@@ -28,7 +28,7 @@ addLayer("o", {
     hotkeys: [
         {key: "p", description: "P: Reset for prestige points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown(){return hasUpgrade('s',23)||player.o.unlocked},
+    layerShown(){return false},
     branches:['s'],
     componentStyles: {
         "buyable"() {

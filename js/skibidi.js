@@ -51,7 +51,7 @@ addLayer("s", {
         15: {title: "rizzy",description(){return`Multiplier to skibidi toilets based on points.`},cost:new Decimal(20**2),currencyDisplayName:"rizz",currencyInternalName:"rizz",currencyLayer:"s",effect(){let x = player.points.add(1).root(2.3);return x},effectDisplay() {return `${format(upgradeEffect('s',15))}x`}},
         21: {title: "But the",description(){return`Skibidi toilet requirement is divided by 2.`},cost:new Decimal(4),currencyDisplayName:"sigma",currencyInternalName:"sigma",currencyLayer:"s",},
         22: {title: "fire",description(){return`Sigma costs decrease with more skibidi toilets.`},cost:new Decimal(5),currencyDisplayName:"sigma",currencyInternalName:"sigma",currencyLayer:"s",effect(){let x = player.s.points.pow(1.5).add(1);return x},effectDisplay() {return `${format(upgradeEffect('s',22))}x`}},
-        23: {title: "is",description(){return`Unlock Ohio.`},cost(){let x = new Decimal(1000);if(hasUpgrade('s',22))x=x.div(upgradeEffect('s',22));return x},currencyDisplayName:"sigma",currencyInternalName:"sigma",currencyLayer:"s",}
+        23: {title: "is",description(){return`Unlock Ohio.`},cost(){let x = new Decimal(1000);if(hasUpgrade('s',22))x=x.div(upgradeEffect('s',22));return x},currencyDisplayName:"sigma",currencyInternalName:"sigma",currencyLayer:"s",},
     },
     decay() {
         let x = player.points.sub(player.cap).mul(4).max(0).root(2.5).add(1) // player.cap
@@ -83,6 +83,20 @@ addLayer("s", {
           function(){if (hasUpgrade('s',12)) return "blank"},
           function(){if (hasUpgrade('s',12)) return ["row", [ ["upgrade",21], ["upgrade",22], ["upgrade",23], ] ]}
         ]
+      },
+      "Ohio": {
+        unlocked() {
+          return hasUpgrade('s',23)||player.o.unlocked
+        },
+        content: [
+          ["layer-proxy", ["o", [
+            "main-display",
+            "blank",
+            "prestige-button",
+            "blank",
+            ["row", [["buyable",11], ["buyable",12], ["buyable",13], ]],
+          ]]]
+        ]
       }
     },
     update(diff) {
@@ -96,5 +110,6 @@ addLayer("s", {
             layerDataReset(this.layer, keep);
         };
         if (getBuyableAmount('o',13).gte(1)) player.s.upgrades = player.s.upgrades.push(kept);
-    }
+    },
+    leftTab: true,
 })
