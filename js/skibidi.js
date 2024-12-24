@@ -112,4 +112,5 @@ addLayer("s", {
         if (getBuyableAmount('o',13).gte(1)) player.s.upgrades = player.s.upgrades.push(kept);
     },
     leftTab: true,
+    previousTab: "",
 })
