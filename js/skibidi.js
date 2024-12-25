@@ -56,7 +56,7 @@ addLayer("s", {
     decay() {
         let x = player.points.sub(player.cap).mul(4).max(0).root(2.5).add(1) // player.cap
         x = x.div(buyableEffect('o',12).x)
-        let y = Decimal.pow((player.s.resetTime/120)+1, 6) // skibidi reset time
+        let y = Decimal.pow((player.s.resetTime/120)+1, (hasAchievement('a',12)?3.3:6)) // skibidi reset time
         let z = player.s.points.add(1).mul(2).root(2) // skibidi amount
         return {x:x,y:y,z:z}
     },
@@ -116,7 +116,17 @@ addLayer("s", {
         ],
       },
       "Achievements": {
-        
+        unlocked() {
+          return true
+        },
+        buttonStyle: {
+            "color": "rgb(0, 4, 255)",
+        },
+        content: [
+          ["layer-proxy", ["a", [
+            "achievements"
+          ]]]
+        ]
       }
     },
     update(diff) {

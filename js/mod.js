@@ -2,7 +2,7 @@ let modInfo = {
 	name: "The Skibidi Tree",
 	author: "violet",
 	pointsName: "points",
-	modFiles: ["skibidi.js","ohio.js","z.js","tree.js"],
+	modFiles: ["skibidi.js","ohio.js","z.js","tree.js","ach.js"],
 
 	discordName: "",
 	discordLink: "",
@@ -20,7 +20,10 @@ let changelog = `<h1>Changelog:</h1><br>
 	<h3>v0.0</h3><br>
 		- Added Skibidi and Ohio layers.<br>
   <h4>v0.1</h4><br>
-    - Added 2 upgrades.`
+    - Added 2 upgrades.<br>
+    - Added the hawk layer.<br>
+    - Also added achievements.<br>
+    - Rebalanced the time formula.<br>`
 
 let winText = `Congratulations! You have reached the end and beaten this game, but for now...`
 
@@ -46,6 +49,7 @@ function getPointGen() {
   if (player.points.gte(player.cap)) gain=gain.div(tmp.s.decay.x)
   gain=gain.div(tmp.s.decay.y)
   gain=gain.div(tmp.s.decay.z)
+  hasAchievement('a',12)?gain=gain.mul(3):gain
   if (hasUpgrade('s',11)) gain=gain.mul(upgradeEffect('s',11))
   if (hasUpgrade('s',13)) gain=gain.mul(upgradeEffect('s',13))
   if (hasUpgrade('s',14)) gain=gain.mul(upgradeEffect('s',14))

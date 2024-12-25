@@ -27,5 +27,21 @@ addLayer("a", {
     hotkeys: [
         {key: "p", description: "P: Reset for prestige points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown(){return true}
+    layerShown(){return true},
+    achievements: {
+        11: {
+            name: "Start",
+            tooltip: "The first one's always free<br><br>Reward: An increased sense of regret. Who would make this game?",
+            done() { return true }
+        },
+        12: {
+            name: "Impossible",
+            tooltip: "I chose that you can't really get past the first stage anymore.<br><br>Reward: Point gain is multiplied by 3.00x and time formula is weakened.<br><br>Also, a free skibidi toilet.",
+            done() { return player.points.gte(3) },
+            onComplete() {
+                player.points = getNextAt('s')
+                doReset('s')
+            }
+        }
+    }
 })
