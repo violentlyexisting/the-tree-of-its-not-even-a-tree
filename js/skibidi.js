@@ -97,6 +97,19 @@ addLayer("s", {
             ["row", [["buyable",11], ["buyable",12], ["buyable",13], ["buyable",14], ["buyable",15]]],
           ]]]
         ]
+      },
+      "Hawk": {
+        unlocked() {
+          return false
+        },
+        buttonStyle: {
+            "border-color":"rgb(255, 232, 27)"
+        },
+        content: [
+          ["layer-proxy", ["h", [
+            ["display-text"]
+          ]]]
+        ],
       }
     },
     update(diff) {
