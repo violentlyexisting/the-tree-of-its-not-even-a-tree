@@ -100,14 +100,16 @@ addLayer("s", {
       },
       "Hawk": {
         unlocked() {
-          return false
+          return true
         },
         buttonStyle: {
             "border-color":"rgb(255, 232, 27)"
         },
         content: [
           ["layer-proxy", ["h", [
-            ["display-text"]
+            ["display-text", function() {
+              return `Hawk` + `<h2 style="color: rgb(255, 232, 27); text-shadow: 0px 0px 10px;">${formatWhole(player.h.points)}</h2>`                    
+            }]
           ]]]
         ],
       }

@@ -4,12 +4,12 @@ addLayer("h", {
     position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
     startData() { return {
         unlocked: false,
-		points: decimalZero,
+		    points: decimalZero,
         best: decimalZero,
         total: decimalZero,
         resetTime: 0,
     }},
-    color: "#4BDC13",
+    color: "rgb(255, 232, 27)",
     requires: new Decimal(10), // Can be a function that takes requirement increases into account
     resource: "hawk(s)", // Name of prestige currency
     baseResource: "points", // Name of resource prestige is based on
