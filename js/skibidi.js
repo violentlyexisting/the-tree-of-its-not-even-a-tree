@@ -94,7 +94,7 @@ addLayer("s", {
             "blank",
             "prestige-button",
             "blank",
-            ["row", [["buyable",11], ["buyable",12], ["buyable",13], ]],
+            ["row", [["buyable",11], ["buyable",12], ["buyable",13], ["buyable",14], ["buyable",15]]],
           ]]]
         ]
       }
@@ -104,12 +104,14 @@ addLayer("s", {
     },
     doReset(resettingLayer) {
         let keep = [];
-        let kept = [12];
+        let kept = [12, 14];
         if (layers[resettingLayer].row > this.row) { 
             // Reset the layer while keeping specified fields
             layerDataReset(this.layer, keep);
         };
-        if (getBuyableAmount('o',13).gte(1)) player.s.upgrades.push(kept);
+        if (getBuyableAmount('o',13).gte(1)) player.s.upgrades.push(kept[0]);      
+        if (getBuyableAmount('o',15).gte(1)) player.s.upgrades.push(kept[1]);
+        addPoints('s', getBuyableAmount('o',14));
     },
     leftTab: true,
     previousTab: "",

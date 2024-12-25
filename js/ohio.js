@@ -93,17 +93,31 @@ addLayer("o", {
             display() { 
               return `Start with more skibidi toilets on ohio reset.
               Cost: ${format(tmp[this.layer].buyables[this.id].cost)} ohio points.
-              Currently: +${formatWhole(getBuyableAmount(''))}
-              Next: +${format(buyableEffect(this.layer,this.id).y)}`
+              Currently: +${formatWhole(getBuyableAmount(this.layer,this.id))}
+              Next: +${formatWhole(getBuyableAmount(this.layer,this.id).add(1))}`
+            },            
+            cost() {
+                let x = Decimal.add(11, getBuyableAmount(this.layer,this.id).add(1).pow(1.4))
+                return x
             },
-            cost: new Decimal(12),
             canAfford() { return player.o.points.gte(tmp[this.layer].buyables[this.id].cost) },
             buy() {                                
                 player.o.points = player.o.points.sub(tmp[this.layer].buyables[this.id].cost)
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
-            purchaseLimit: new Decimal(20)
-        }
+            purchaseLimit: new Decimal(20),
+        },
+        15: {
+            display() { return `Keep Rizz Upgrade 14 "is".
+            Cost: ${format(tmp[this.layer].buyables[this.id].cost)} ohio points.` },
+            cost: new Decimal(25),
+            canAfford() { return player.o.points.gte(tmp[this.layer].buyables[this.id].cost) },
+            buy() {                
+                player.o.points = player.o.points.sub(tmp[this.layer].buyables[this.id].cost)
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            purchaseLimit: new Decimal(1),
+        },
     },
     prestigeButtonText() {
         let txt = `Reset for <b>+${formatWhole(getResetGain('o'))}</b> ohio point(s).`
@@ -118,7 +132,7 @@ addLayer("o", {
                 "blank",
                 "prestige-button",
                 "blank",              
-                ["row", [["buyable",11], ["buyable",12], ["buyable",13], ]],
+                ["row", [["buyable",11], ["buyable",12], ["buyable",13], ["buyable",14]]],
             ]
         }
     }
