@@ -86,10 +86,24 @@ addLayer("o", {
             buy() {                
                 player.o.points = player.o.points.sub(tmp[this.layer].buyables[this.id].cost)
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
-                player.cap = player.cap.add(1)
             },
             purchaseLimit: new Decimal(1),
-        },      
+        },
+        14: {
+            display() { 
+              return `Start with more skibidi toilets on ohio reset.
+              Cost: ${format(tmp[this.layer].buyables[this.id].cost)} ohio points.
+              Currently: +${formatWhole(getBuyableAmount(''))}
+              Next: +${format(buyableEffect(this.layer,this.id).y)}`
+            },
+            cost: new Decimal(12),
+            canAfford() { return player.o.points.gte(tmp[this.layer].buyables[this.id].cost) },
+            buy() {                                
+                player.o.points = player.o.points.sub(tmp[this.layer].buyables[this.id].cost)
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            purchaseLimit: new Decimal(20)
+        }
     },
     prestigeButtonText() {
         let txt = `Reset for <b>+${formatWhole(getResetGain('o'))}</b> ohio point(s).`
