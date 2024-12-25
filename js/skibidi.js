@@ -44,9 +44,9 @@ addLayer("s", {
         return `granting ${format(tmp.s.effect)} rizz.`
     },
     upgrades: {
-        11: {title: "The",description(){return `Rizz boosts point gain.`},cost: new Decimal(25),currencyDisplayName:"rizz",currencyInternalName:"rizz",currencyLayer:"s",effect() {let x = player.s.rizz.add(1).log10().add(1);return x},effectDisplay() {return `${format(upgradeEffect(this.layer,this.id))}x`}},
-        12: {title: "weather",description(){return`Unlock sigma.`},cost:new Decimal(36),currencyDisplayName:"rizz",currencyInternalName:"rizz",currencyLayer:"s"},
-        13: {title: "outside",description(){return`Points boost themselves`},cost:new Decimal(144),currencyDisplayName:"rizz",currencyInternalName:"rizz",currencyLayer:"s",effect(){let x = player.points.add(1).root(2);return x},effectDisplay() {return `${format(upgradeEffect('s',13))}x`}},
+        11: {title: "The",description(){return `Rizz boosts point gain.`},cost: new Decimal(4),currencyDisplayName:"rizz",currencyInternalName:"rizz",currencyLayer:"s",effect() {let x = player.s.rizz.add(1).log(2).mul(2).add(1);return x},effectDisplay() {return `${format(upgradeEffect(this.layer,this.id))}x`}},
+        12: {title: "weather",description(){return`Unlock sigma.`},cost:new Decimal(25),currencyDisplayName:"rizz",currencyInternalName:"rizz",currencyLayer:"s"},
+        13: {title: "outside",description(){return`Points boost themselves`},cost:new Decimal(100),currencyDisplayName:"rizz",currencyInternalName:"rizz",currencyLayer:"s",effect(){let x = player.points.add(1).root(2);return x},effectDisplay() {return `${format(upgradeEffect('s',13))}x`}},
         14: {title: "is",description(){return`Multiplier to points that decreases with time in this skibidi.`},cost:new Decimal(15**2),currencyDisplayName:"rizz",currencyInternalName:"rizz",currencyLayer:"s",effect(){let x = new Decimal(10).sub(Decimal.pow(player.s.resetTime, 0.9)).max(1);return x},effectDisplay() {return `${format(upgradeEffect('s',14))}x`}},
         15: {title: "rizzy",description(){return`Multiplier to skibidi toilets based on points.`},cost:new Decimal(20**2),currencyDisplayName:"rizz",currencyInternalName:"rizz",currencyLayer:"s",effect(){let x = player.points.add(1).root(2.3);return x},effectDisplay() {return `${format(upgradeEffect('s',15))}x`}},
         21: {title: "But the",description(){return`Skibidi toilet requirement is divided by 2.`},cost:new Decimal(4),currencyDisplayName:"sigma",currencyInternalName:"sigma",currencyLayer:"s",},
@@ -56,7 +56,7 @@ addLayer("s", {
     decay() {
         let x = player.points.sub(player.cap).mul(4).max(0).root(2.5).add(1) // player.cap
         x = x.div(buyableEffect('o',12).x)
-        let y = Decimal.pow((player.s.resetTime/100)+1, 2.5) // skibidi reset time
+        let y = Decimal.pow((player.s.resetTime/120)+1, 6) // skibidi reset time
         let z = player.s.points.add(1).mul(2).root(2) // skibidi amount
         return {x:x,y:y,z:z}
     },
@@ -100,7 +100,7 @@ addLayer("s", {
       },
       "Hawk": {
         unlocked() {
-          return true
+          return player.o.best.gte("30")||player.h.unlocked
         },
         buttonStyle: {
             "border-color":"rgb(255, 232, 27)"
@@ -108,10 +108,15 @@ addLayer("s", {
         content: [
           ["layer-proxy", ["h", [
             ["display-text", function() {
-              return `Hawk` + `<h2 style="color: rgb(255, 232, 27); text-shadow: 0px 0px 10px;">${formatWhole(player.h.points)}</h2>`                    
-            }]
+              return `Hawk ` + `<h2 style="color: rgb(255, 232, 27); text-shadow: 0px 0px 10px;">${formatWhole(player.h.points)}</h2>`                    
+            }],
+            "blank",
+            "prestige-button",
           ]]]
         ],
+      },
+      "Achievements": {
+        
       }
     },
     update(diff) {
