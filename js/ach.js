@@ -27,7 +27,7 @@ addLayer("a", {
     hotkeys: [
         {key: "p", description: "P: Reset for prestige points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown(){return true},
+    layerShown(){return false},
     achievements: {
         11: {
             name: "Start",
