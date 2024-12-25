@@ -109,7 +109,7 @@ addLayer("s", {
             // Reset the layer while keeping specified fields
             layerDataReset(this.layer, keep);
         };
-        if (getBuyableAmount('o',13).gte(1)) player.s.upgrades = player.s.upgrades.push(kept);
+        if (getBuyableAmount('o',13).gte(1)) player.s.upgrades.push(kept);
     },
     leftTab: true,
     previousTab: "",
